@@ -1,0 +1,5 @@
+curl -v -X GET http://obg.in-bank.ir/apibank/api/v0/account/balance/0100907846000 -H "Content-Type:application/json" -H "Authorization: Bearer 5e4ac3b8-c55c-4315-987c-f8e0a7d66d91"
+
+curl -v -X POST -u "1d9dcd9h14h:nb314t" -d "grant_type=authorization_code" -d "code=xr91Ji" -d "redirect_uri=http://localhost:8080/Banking/" http://obg.in-bank.ir/apibank/oauth/token
+
+http://obg.in-bank.ir/apibank/oauth/authorize?client_id=1d9dcd9h14h&redirect_uri=http://localhost:8080/Banking/&response_type=code&state=123456
