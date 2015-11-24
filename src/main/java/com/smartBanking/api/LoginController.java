@@ -16,6 +16,8 @@ import com.sun.jersey.api.client.WebResource;
 
 import main.java.com.smartBanking.bin.Login;
 import main.java.com.smartBanking.da.LoginDao;
+import main.java.com.smartBanking.services.BankAPI;
+
 
 @Path("/login")
 public class LoginController {
@@ -33,15 +35,16 @@ public class LoginController {
 		jsonObject.put("Client Activation Code", login.getActivation_code());
 		jsonObject.put("Client Access Token", login.getAccess_token());
 
-		Client client = Client.create();
-	    WebResource webResource =   client.resource("http://obg.in-bank.ir/apibank/api/v0/account/balance/0100907846000");
-	    ClientResponse response = webResource     
-	    		.header("Authorization", "Bearer "+login.getAccess_token())
-	    		.header("Content-Type", "application/json")
-	    		.accept(MediaType.APPLICATION_JSON)
-	            .type(MediaType.APPLICATION_JSON)
-	            .get(ClientResponse.class);
-	    
+//		Client client = Client.create();
+//	    WebResource webResource =   client.resource("http://obg.in-bank.ir/apibank/api/v0/account/balance/0100907846000");
+//	    ClientResponse response = webResource     
+//	    		.header("Authorization", "Bearer "+login.getAccess_token())
+//	    		.header("Content-Type", "application/json")
+//	    		.accept(MediaType.APPLICATION_JSON)
+//	            .type(MediaType.APPLICATION_JSON)
+//	            .get(ClientResponse.class);
+//	    
+		ClientResponse response = BankAPI.getBalance(login.getAccess_token());
 	    if (response.getStatus() == 401) {	        
 				throw new AuthenticationException("Access Token");			
 	    }

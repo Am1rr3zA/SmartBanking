@@ -12,7 +12,7 @@ public class DatabaseAccess {
 		String DRIVER = "com.mysql.jdbc.Driver";
 		String URL = "jdbc:mysql://127.0.0.1/smartBanking?";
 		String UserName = "root";
-		String Password = "root";
+		String Password = "";
 		try
 		{
 			Class.forName(DRIVER);
