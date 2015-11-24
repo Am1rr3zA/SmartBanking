@@ -34,17 +34,11 @@ public class LoginController {
 		jsonObject.put("Client Secret", login.getClientSecret());
 		jsonObject.put("Client Activation Code", login.getActivation_code());
 		jsonObject.put("Client Access Token", login.getAccess_token());
-
-//		Client client = Client.create();
-//	    WebResource webResource =   client.resource("http://obg.in-bank.ir/apibank/api/v0/account/balance/0100907846000");
-//	    ClientResponse response = webResource     
-//	    		.header("Authorization", "Bearer "+login.getAccess_token())
-//	    		.header("Content-Type", "application/json")
-//	    		.accept(MediaType.APPLICATION_JSON)
-//	            .type(MediaType.APPLICATION_JSON)
-//	            .get(ClientResponse.class);
-//	    
-		ClientResponse response = BankAPI.getBalance(login.getAccess_token());
+    
+		ClientResponse response = BankAPI.getBalance(login.getAccess_token(), "0100907846000");
+//		ClientResponse response = BankAPI.getAccountFullStatement(login.getAccess_token(), "0100907846000", "13930704", "13940815");
+//		ClientResponse response = BankAPI.getCheckInfo(login.getAccess_token(), "0100907846000", "0000396778");
+//		ClientResponse response = BankAPI.getChequeBookInfo(login.getAccess_token(), "0100907846000", "4389781091");
 	    if (response.getStatus() == 401) {	        
 				throw new AuthenticationException("Access Token");			
 	    }
