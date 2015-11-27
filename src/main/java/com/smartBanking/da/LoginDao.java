@@ -48,7 +48,8 @@ public class LoginDao {
 			BinLogin login = new BinLogin();
 			while (result.next())
 			{
-				login.setLoginId(Integer.parseInt(result.getString("id"))); 
+				login.setLoginId(Integer.parseInt(result.getString("id")));
+				login.setUsername(username);
 				login.setPassword(result.getString("password"));
 				login.setClientID(result.getString("client_id"));
 				login.setClientSecret(result.getString("client_secret"));				
@@ -68,7 +69,37 @@ public class LoginDao {
 		}
 	}
 	
-
+	public BinLogin getLoginByID(int id) 
+	{
+		PreparedStatement prepStmt = null;
+		try {
+			String cSQL = "SELECT * FROM login WHERE id = ? ";
+			prepStmt = connection.prepareStatement(cSQL);
+			prepStmt.setInt(1, id); 
+			ResultSet result = prepStmt.executeQuery();
+			BinLogin login = new BinLogin();
+			while (result.next())
+			{
+				login.setLoginId(id); 
+				login.setUsername(result.getString("username"));
+				login.setPassword(result.getString("password"));
+				login.setClientID(result.getString("client_id"));
+				login.setClientSecret(result.getString("client_secret"));				
+				login.setAccess_token(result.getString("access_token"));
+				String tmp = result.getString("accounts");
+				List<String> accounts = new ArrayList<>();
+				if (tmp != null){
+					accounts = Arrays.asList(tmp.split("\\s*,\\s*"));
+				}
+				login.setAccounts(accounts);
+			}
+			return login;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			prepStmt = null;
+			return null;
+		}
+	}
 	
 	
 }

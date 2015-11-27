@@ -22,7 +22,8 @@ public class RuleController {
 	  @GET
 	  @Produces("application/json")
 	  public Response login() throws JSONException, AuthenticationException {
-		  List<BinRule> rules = dao.getRulesForUser("1");
+		  int pid = 1;
+		  List<BinRule> rules = dao.getRulesForUser(pid);
 		  
 		  return Response.status(200).entity(rules.get(0).toString()).build();
 	  

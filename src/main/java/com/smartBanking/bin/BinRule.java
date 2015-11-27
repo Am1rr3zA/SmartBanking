@@ -10,9 +10,9 @@ import org.json.JSONObject;
 @XmlRootElement
 public class BinRule {
 	@XmlElement
-	String PID;
+	int PID;
 	@XmlAttribute
-	String RID;
+	int RID;
 	@XmlElement
 	String action;
 	@XmlElement
@@ -23,7 +23,7 @@ public class BinRule {
 	
 	}
 	
-	public BinRule(String PID, String RID, String Action, String Condition)
+	public BinRule(int PID, int RID, String Action, String Condition)
 	{
 		this.PID = PID;
 		this.RID = RID;
@@ -31,19 +31,19 @@ public class BinRule {
 		this.condition = Condition;
 	}
 
-	public String getPID() {
+	public int getPID() {
 		return PID;
 	}
 
-	public void setPID(String pID) {
+	public void setPID(int pID) {
 		PID = pID;
 	}
 
-	public String getRID() {
+	public int getRID() {
 		return RID;
 	}
 
-	public void setRID(String rID) {
+	public void setRID(int rID) {
 		RID = rID;
 	}
 

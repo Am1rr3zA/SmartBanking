@@ -15,7 +15,9 @@ import org.json.JSONStringer;
 
 import com.sun.jersey.api.client.ClientResponse;
 
+import main.java.com.smartBanking.Exceptions.notFound;
 import main.java.com.smartBanking.api.LoginController;
+import main.java.com.smartBanking.bin.BinLogin;
 import main.java.com.smartBanking.bin.BinRule;
 import main.java.com.smartBanking.da.LoginDao;
 import main.java.com.smartBanking.services.BankAPI;
@@ -24,15 +26,26 @@ public class Parse {
 
 	String Input_condition;
 	String Input_action;
+	String token;
+	String accountNum;
 	LoginDao dao = new LoginDao();
 
 
 
 
-	public Parse(BinRule input)
+	public Parse(BinRule input, BinLogin user) throws notFound
 	{
 		Input_condition = input.getCondition();
 		Input_action = input.getAction();
+		if(user.getAccess_token()!= null)
+			token = user.getAccess_token();
+		else
+			throw new notFound("Not found access-token");
+		
+		if(user.getAccounts()!= null)
+			accountNum = user.getAccounts().get(0);
+		else
+			throw new notFound("Not found account number");
 	}
 
 	public List<Condition> parseCondition()
@@ -81,7 +94,7 @@ public class Parse {
 		{
 			if(cond.field.equals("balance"))
 			{
-				ClientResponse response = BankAPI.getBalance(LoginController.login.getAccess_token(), "0100907846000");
+				ClientResponse response = BankAPI.getBalance(token, accountNum);
 				JSONObject jObject  = new JSONObject(response.getEntity(String.class));
 				String accBalance = jObject.get("additionalData").toString();
 				

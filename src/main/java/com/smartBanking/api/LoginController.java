@@ -34,6 +34,7 @@ public class LoginController {
 		jsonObject.put("Client Accounts", login.getAccounts());
 		jsonObject.put("Client Access Token", login.getAccess_token());
     
+		
 //		ClientResponse response = BankAPI.getBalance(login.getAccess_token(), "0100907846000");
 //		ClientResponse response = BankAPI.getAccountFullStatement(login.getAccess_token(), "0100907846000", "13930704", "13940815");
 //		ClientResponse response = BankAPI.getCheckInfo(login.getAccess_token(), "0100907846000", "0000396778");

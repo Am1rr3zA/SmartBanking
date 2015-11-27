@@ -37,13 +37,13 @@ public class RuleDao {
 		}
 	}
 	
-	public List<BinRule> getRulesForUser(String pid) 
+	public List<BinRule> getRulesForUser(int pid) 
 	{
 		PreparedStatement prepStmt = null;
 		try {
 			String cSQL = "SELECT * FROM rule WHERE pid = ? ";
 			prepStmt = connection.prepareStatement(cSQL);
-			prepStmt.setString(1, pid); 
+			prepStmt.setInt(1, pid); 
 			ResultSet result = prepStmt.executeQuery();
 			List<BinRule> rules = new ArrayList<>();
 			
@@ -51,7 +51,7 @@ public class RuleDao {
 			{
 				BinRule binRule = new BinRule();
 				
-				binRule.setRID(result.getString(1));
+				binRule.setRID(Integer.parseInt(result.getString(1)));
 				binRule.setPID(pid);				
 				binRule.setCondition(result.getString(3));
 				binRule.setAction(result.getString(4));
