@@ -4,14 +4,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import main.java.com.smartBanking.bin.BinLogin;
+import main.java.com.smartBanking.bin.BinRule;
 
-public class LoginDao {
+public class RuleDao {
 	DatabaseAccess data;
 	Connection connection;
 	
-	public LoginDao()
+	public RuleDao()
 	{
 		try {
 			data = new DatabaseAccess();
@@ -34,23 +37,28 @@ public class LoginDao {
 		}
 	}
 	
-	public BinLogin getLoginByUsername(String username) 
+	public List<BinRule> getRulesForUser(String pid) 
 	{
 		PreparedStatement prepStmt = null;
 		try {
-			String cSQL = "SELECT * FROM login WHERE username = ? ";
+			String cSQL = "SELECT * FROM rule WHERE pid = ? ";
 			prepStmt = connection.prepareStatement(cSQL);
-			prepStmt.setString(1, username); 
+			prepStmt.setString(1, pid); 
 			ResultSet result = prepStmt.executeQuery();
-			BinLogin login = new BinLogin();
+			List<BinRule> rules = new ArrayList<>();
+			
 			while (result.next())
 			{
-				login.setClientID(result.getString(4));
-				login.setClientSecret(result.getString(5));
-				login.setActivation_code(result.getString(6));
-				login.setAccess_token(result.getString(7));
+				BinRule binRule = new BinRule();
+				
+				binRule.setRID(result.getString(1));
+				binRule.setPID(pid);				
+				binRule.setCondition(result.getString(3));
+				binRule.setAction(result.getString(4));
+				
+				rules.add(binRule);
 			}
-			return login;
+			return rules;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			prepStmt = null;
@@ -59,8 +67,4 @@ public class LoginDao {
 	}
 	
 
-	
-	
 }
-
-
