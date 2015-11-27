@@ -1,5 +1,7 @@
 package main.java.com.smartBanking.bin;
 
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -18,9 +20,9 @@ public class BinLogin {
 	@XmlAttribute
 	private String clientSecret;
 	@XmlAttribute
-	private String activation_code;
-	@XmlAttribute
 	private String access_token;
+	@XmlAttribute
+	private List<String> accounts;
 	
 	public int getLoginId() {
 		return loginId;
@@ -52,18 +54,20 @@ public class BinLogin {
 	public void setClientSecret(String clientSecret) {
 		this.clientSecret = clientSecret;
 	}
-	public String getActivation_code() {
-		return activation_code;
-	}
-	public void setActivation_code(String activation_code) {
-		this.activation_code = activation_code;
-	}
+
 	public String getAccess_token() {
 		return access_token;
 	}
 	public void setAccess_token(String access_token) {
 		this.access_token = access_token;
 	}
+	public List<String> getAccounts() {
+		return accounts;
+	}
+	public void setAccounts(List<String> accounts) {
+		this.accounts = accounts;
+	}
+	
 
 
 }

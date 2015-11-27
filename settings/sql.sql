@@ -1,37 +1,82 @@
---
--- Database: `smartBanking`
---
+# ************************************************************
+# Sequel Pro SQL dump
+# Version 4499
+#
+# http://www.sequelpro.com/
+# https://github.com/sequelpro/sequelpro
+#
+# Host: 127.0.0.1 (MySQL 5.5.42)
+# Database: smartBanking
+# Generation Time: 2015-11-27 23:01:14 +0000
+# ************************************************************
 
--- --------------------------------------------------------
 
---
--- Table structure for table `login`
---
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+
+# Dump of table login
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `login`;
+
 CREATE TABLE `login` (
   `id` int(11) NOT NULL,
   `username` varchar(20) COLLATE utf8_bin NOT NULL,
   `password` varchar(20) COLLATE utf8_bin NOT NULL,
   `client_id` varchar(11) COLLATE utf8_bin DEFAULT NULL,
   `client_secret` varchar(6) COLLATE utf8_bin DEFAULT NULL,
-  `activation_code` varchar(6) COLLATE utf8_bin NOT NULL,
-  `access_token` varchar(36) COLLATE utf8_bin NOT NULL
+  `access_token` varchar(36) COLLATE utf8_bin NOT NULL,
+  `accounts` text COLLATE utf8_bin,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
---
--- Dumping data for table `login`
---
+LOCK TABLES `login` WRITE;
+/*!40000 ALTER TABLE `login` DISABLE KEYS */;
 
-INSERT INTO `login` (`id`, `username`, `password`, `client_id`, `client_secret`, `activation_code`, `access_token`) VALUES
-(1, 'Elnaz', 'eli', '1d9dcd9h14h', 'nb314t', 'xr91Ji', '5e4ac3b8-c55c-4315-987c-f8e0a7d66d91');
+INSERT INTO `login` (`id`, `username`, `password`, `client_id`, `client_secret`, `access_token`, `accounts`)
+VALUES
+	(1,X'456C6E617A',X'656C69',X'3164396463643968313468',X'6E6233313474',X'66626262633834392D653639392D346566332D613933352D613632353839353933353534',X'303130303930373834363030302C30323030323137313935303038');
 
---
--- Indexes for dumped tables
---
+/*!40000 ALTER TABLE `login` ENABLE KEYS */;
+UNLOCK TABLES;
 
---
--- Indexes for table `login`
---
-ALTER TABLE `login`
-  ADD PRIMARY KEY (`id`);
+
+# Dump of table rule
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `rule`;
+
+CREATE TABLE `rule` (
+  `rid` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `pid` int(11) NOT NULL,
+  `condition` text COLLATE utf8_bin NOT NULL,
+  `action` text COLLATE utf8_bin NOT NULL,
+  PRIMARY KEY (`rid`),
+  KEY `login_fk` (`pid`),
+  CONSTRAINT `login_fk` FOREIGN KEY (`pid`) REFERENCES `login` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+LOCK TABLES `rule` WRITE;
+/*!40000 ALTER TABLE `rule` DISABLE KEYS */;
+
+INSERT INTO `rule` (`rid`, `pid`, `condition`, `action`)
+VALUES
+	(1,1,X'616D6F756E74203E2031303030303030',X'61636F756E74203131313131');
+
+/*!40000 ALTER TABLE `rule` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

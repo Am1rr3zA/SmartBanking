@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import main.java.com.smartBanking.bin.BinLogin;
 
@@ -45,10 +48,17 @@ public class LoginDao {
 			BinLogin login = new BinLogin();
 			while (result.next())
 			{
-				login.setClientID(result.getString(4));
-				login.setClientSecret(result.getString(5));
-				login.setActivation_code(result.getString(6));
-				login.setAccess_token(result.getString(7));
+				login.setLoginId(Integer.parseInt(result.getString("id"))); 
+				login.setPassword(result.getString("password"));
+				login.setClientID(result.getString("client_id"));
+				login.setClientSecret(result.getString("client_secret"));				
+				login.setAccess_token(result.getString("access_token"));
+				String tmp = result.getString("accounts");
+				List<String> accounts = new ArrayList<>();
+				if (tmp != null){
+					accounts = Arrays.asList(tmp.split("\\s*,\\s*"));
+				}
+				login.setAccounts(accounts);
 			}
 			return login;
 		} catch (SQLException e) {
