@@ -2,6 +2,7 @@ package main.java.com.smartBanking.Parser;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.RuleBasedCollator;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,8 +16,7 @@ import org.json.JSONStringer;
 import com.sun.jersey.api.client.ClientResponse;
 
 import main.java.com.smartBanking.api.LoginController;
-import main.java.com.smartBanking.bin.InputData;
-import main.java.com.smartBanking.bin.Login;
+import main.java.com.smartBanking.bin.BinRule;
 import main.java.com.smartBanking.da.LoginDao;
 import main.java.com.smartBanking.services.BankAPI;
 
@@ -29,10 +29,10 @@ public class Parse {
 
 
 
-	public Parse(InputData input)
+	public Parse(BinRule input)
 	{
-		Input_condition = input.condition;
-		Input_action = input.action;
+		Input_condition = input.getCondition();
+		Input_action = input.getAction();
 	}
 
 	public List<Condition> parseCondition()
