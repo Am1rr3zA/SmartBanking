@@ -1,10 +1,12 @@
 package main.java.com.smartBanking.services;
 
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.core.util.MultivaluedMapImpl;
 
 public class BankAPI {
 
@@ -76,7 +78,33 @@ public class BankAPI {
 	    return response;
 	}
 	
+
+	public static ClientResponse getTicketTransferLocal(String access_token, String from_account_number, String to_account_number, String amount)
+	{
+		Client client = Client.create();            
+		String input = "{\"destination\":\"" + to_account_number+ "\", " + "\"amount\":\"" + amount+ "\"}";
+	    WebResource webResource =   client.resource("http://obg.in-bank.ir/apibank/api/v0/ticket/transfer/local/"+from_account_number);
+	    ClientResponse response = webResource     
+	    		.header("Authorization", "Bearer " + access_token)
+	    		.accept(MediaType.APPLICATION_JSON)
+	            .type(MediaType.APPLICATION_JSON)
+	            .post(ClientResponse.class, input);
+	    
+	    return response;
+	}	
 	
-	
-	
+	public static ClientResponse TransferLocal(String access_token, String from_account_number, String to_account_number, String amount, String ticket)
+	{
+		Client client = Client.create();            
+		String input = "{\"destination\":\"" + to_account_number+ "\", " + "\"amount\":\"" + amount+ "\", " + "\"ticket\":\"" + ticket+ "\"}";
+        
+	    WebResource webResource =   client.resource("http://obg.in-bank.ir/apibank/api/v0/transfer/local/"+from_account_number);
+	    ClientResponse response = webResource     
+	    		.header("Authorization", "Bearer " + access_token)
+	    		.accept(MediaType.APPLICATION_JSON)
+	            .type(MediaType.APPLICATION_JSON)
+	            .post(ClientResponse.class, input);
+	    
+	    return response;
+	}	
 }
