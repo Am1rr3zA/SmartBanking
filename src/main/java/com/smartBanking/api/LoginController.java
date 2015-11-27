@@ -14,10 +14,9 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
-import main.java.com.smartBanking.bin.Login;
+import main.java.com.smartBanking.bin.BinLogin;
 import main.java.com.smartBanking.da.LoginDao;
 import main.java.com.smartBanking.services.BankAPI;
-
 
 @Path("/login")
 public class LoginController {
@@ -27,7 +26,7 @@ public class LoginController {
 	  @Produces("application/json")
 	  public Response login() throws JSONException, AuthenticationException {
 		  
-		Login login = dao.getLoginByUsername("Elnaz");
+		BinLogin login = dao.getLoginByUsername("Elnaz");
 
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("Client ID", login.getClientID());
