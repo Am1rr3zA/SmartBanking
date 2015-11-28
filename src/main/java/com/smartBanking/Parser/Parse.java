@@ -92,6 +92,7 @@ public class Parse {
 		List<Boolean> feasValues = new ArrayList<>();
 		for(Condition cond: conditions)
 		{
+			//System.out.println("cond in parse is :"+cond.field+cond.operand+cond.value);
 			if(cond.field.equals("balance"))
 			{
 				ClientResponse response = BankAPI.getBalance(token, accountNum);
@@ -166,8 +167,48 @@ public class Parse {
 
 		for(Boolean b:feasValues)
 			System.out.println("value: "+ b);
-		
 		return feasValues;
+		
+	}
+
+	public String getInput_condition() {
+		return Input_condition;
+	}
+
+	public void setInput_condition(String input_condition) {
+		Input_condition = input_condition;
+	}
+
+	public String getInput_action() {
+		return Input_action;
+	}
+
+	public void setInput_action(String input_action) {
+		Input_action = input_action;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	public String getAccountNum() {
+		return accountNum;
+	}
+
+	public void setAccountNum(String accountNum) {
+		this.accountNum = accountNum;
+	}
+
+	public LoginDao getDao() {
+		return dao;
+	}
+
+	public void setDao(LoginDao dao) {
+		this.dao = dao;
 	}
 
 
