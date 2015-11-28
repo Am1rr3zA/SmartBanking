@@ -73,7 +73,8 @@ public class LoginController {
 		
 		JSONObject jsonObj = new JSONObject(in_json);
 		
-		newRule.setPID(1);
+		String pid = jsonObj.getString("pid");
+		newRule.setPID(Integer.parseInt(pid));
 		
 		String ruleName = jsonObj.getString("name"); 
 		newRule.setRuleName(ruleName);

@@ -71,13 +71,13 @@ public class RuleDao {
 	{
 		PreparedStatement prepStmt = null;
 		try {
-			String cSQL = "insert  into `rule`(`rid`,`pid`,`condition`,`action`) values (?,?,?,?)";
+			String cSQL = "INSERT INTO `rule` (`pid`, `condition`, `action`, `ruleName`) VALUES (?,?,?,?)";
 			
-			prepStmt = connection.prepareStatement(cSQL);
-			prepStmt.setInt(1, binRule.getRID());			
-			prepStmt.setInt(2, binRule.getPID());
-			prepStmt.setString(3, binRule.getCondition());
-			prepStmt.setString(4, binRule.getAction());
+			prepStmt = connection.prepareStatement(cSQL);		
+			prepStmt.setInt(1, binRule.getPID());
+			prepStmt.setString(2, binRule.getCondition());
+			prepStmt.setString(3, binRule.getAction());
+			prepStmt.setString(4, binRule.getRuleName());
 
 			prepStmt.executeUpdate();
 		}catch (SQLException e) {
