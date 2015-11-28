@@ -15,7 +15,9 @@ import javax.ws.rs.core.Response;
 import org.json.JSONException;
 
 import main.java.com.smartBanking.Exceptions.notFound;
+import main.java.com.smartBanking.Parser.ConvertToString;
 import main.java.com.smartBanking.Parser.Parse;
+import main.java.com.smartBanking.bin.BinCondition;
 import main.java.com.smartBanking.bin.BinLogin;
 import main.java.com.smartBanking.bin.BinReport;
 import main.java.com.smartBanking.bin.BinRule;
@@ -39,8 +41,6 @@ public class RuleController {
 
 		generateReportData(rules, user);
 
-
-
 		return Response.status(200).entity(rules.get(0).toString()).build();
 	}
 
@@ -54,6 +54,8 @@ public class RuleController {
 			Parse parser = new Parse(rule,user);
 			//System.out.println("........"+rule.getRID());
 			System.out.println("condition in controler "+rule.getCondition());
+//			This How you should get the conditions
+//			List<BinCondition> tmp = ConvertToString.stringToBinConditions(rules.get(0).getCondition());
 			List<Boolean> result = parser.feasibility(parser.parseCondition());
 			boolean flagOneFalse = false, flagOneTrue = false;
 			for(boolean value:result)
