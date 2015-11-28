@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import main.java.com.smartBanking.bin.BinLogin;
+import main.java.com.smartBanking.bin.BinReport;
 import main.java.com.smartBanking.bin.BinRule;
 
 public class RuleDao {
@@ -63,6 +64,25 @@ public class RuleDao {
 			e.printStackTrace();
 			prepStmt = null;
 			return null;
+		}
+	}
+	
+	public void insertRuleByUserID(BinRule binRule) throws SQLException
+	{
+		PreparedStatement prepStmt = null;
+		try {
+			String cSQL = "insert  into `rule`(`rid`,`pid`,`condition`,`action`) values (?,?,?,?)";
+			
+			prepStmt = connection.prepareStatement(cSQL);
+			prepStmt.setInt(1, binRule.getRID());			
+			prepStmt.setInt(2, binRule.getPID());
+			prepStmt.setString(3, binRule.getCondition());
+			prepStmt.setString(4, binRule.getAction());
+
+			prepStmt.executeUpdate();
+		}catch (SQLException e) {
+			e.printStackTrace();
+			prepStmt = null;	
 		}
 	}
 	

@@ -44,6 +44,7 @@ public class LoginDao {
 			String cSQL = "SELECT * FROM login WHERE username = ? ";
 			prepStmt = connection.prepareStatement(cSQL);
 			prepStmt.setString(1, username); 
+			System.out.println(cSQL);
 			ResultSet result = prepStmt.executeQuery();
 			BinLogin login = new BinLogin();
 			while (result.next())
@@ -76,6 +77,7 @@ public class LoginDao {
 			String cSQL = "SELECT * FROM login WHERE id = ? ";
 			prepStmt = connection.prepareStatement(cSQL);
 			prepStmt.setInt(1, id); 
+			
 			ResultSet result = prepStmt.executeQuery();
 			BinLogin login = new BinLogin();
 			while (result.next())

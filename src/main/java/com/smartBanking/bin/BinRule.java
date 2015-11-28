@@ -17,11 +17,8 @@ public class BinRule {
 	String action;
 	@XmlElement
 	String condition;
-
-	public BinRule()
-	{
-	
-	}
+	@XmlElement
+	String ruleName;
 	
 	public BinRule(int PID, int RID, String Action, String Condition)
 	{
@@ -62,11 +59,25 @@ public class BinRule {
 	public void setCondition(String condition) {
 		this.condition = condition;
 	}
+	
+	public String getRuleName() {
+		return ruleName;
+	}
+
+	public void setRuleName(String name) {
+		this.ruleName = name;
+	}
+
+	public BinRule()
+	{
+	
+	}
 
 	@Override
 	public String toString() {
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("ruleID", getRID());
+		jsonObject.put("ruleName", getRuleName());
 		jsonObject.put("personID", getPID());
 		jsonObject.put("condition", getCondition());
 		jsonObject.put("action", getAction());
