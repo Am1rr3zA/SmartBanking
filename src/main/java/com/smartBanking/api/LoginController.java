@@ -60,7 +60,11 @@ public class LoginController {
 	    
 	    String result = "@Produces(\"application/json\") for Elnaz with: \n " + jsonObject + "\nAccount Summary is :" + response.getEntity(String.class);
 		
-		return Response.status(200).entity(result).build();
+		return Response.status(200)
+				.header("Access-Control-Allow-Origin", "*")
+			    .header("Access-Control-Allow-Methods", "POST, GET, PUT, UPDATE, OPTIONS")
+			    .header("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With")
+			    .entity(result).build();
 	  }
 	  
 	 
@@ -100,7 +104,11 @@ public class LoginController {
 		ruleDao.insertRuleByUserID(newRule);
 	   
 		
-		return Response.status(200).entity(in_json).build();
+		return Response.status(200)
+				.header("Access-Control-Allow-Origin", "*")
+			    .header("Access-Control-Allow-Methods", "POST, GET, PUT, UPDATE, OPTIONS")
+			    .header("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With")
+			    .entity(in_json).build();
 	  }
 
 }
