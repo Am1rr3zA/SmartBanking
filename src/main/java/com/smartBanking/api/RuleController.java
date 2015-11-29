@@ -42,9 +42,6 @@ public class RuleController {
 		generateReportData(rules, user);
 
 		return Response.status(200)
-				.header("Access-Control-Allow-Origin", "*")
-			    .header("Access-Control-Allow-Methods", "POST, GET, PUT, UPDATE, OPTIONS")
-			    .header("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With")
 			    .entity(rules.get(0).toString()).build();
 	}
 

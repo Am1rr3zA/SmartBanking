@@ -52,10 +52,11 @@ public class RuleDao {
 			{
 				BinRule binRule = new BinRule();
 				
-				binRule.setRID(Integer.parseInt(result.getString(1)));
-				binRule.setPID(pid);				
-				binRule.setCondition(result.getString(3));
-				binRule.setAction(result.getString(4));
+				binRule.setRID(Integer.parseInt(result.getString("rid")));
+				binRule.setPID(pid);
+				binRule.setRuleName(result.getString("ruleName"));
+				binRule.setCondition(result.getString("condition"));
+				binRule.setAction(result.getString("action"));
 				
 				rules.add(binRule);
 			}

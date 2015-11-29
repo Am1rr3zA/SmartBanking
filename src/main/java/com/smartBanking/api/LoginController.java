@@ -48,22 +48,19 @@ public class LoginController {
     
 		
 //		ClientResponse response = BankAPI.getBalance(login.getAccess_token(), "0100907846000");
-//		ClientResponse response = BankAPI.getAccountFullStatement(login.getAccess_token(), "0100907846000", "13930704", "13940815");
+		ClientResponse response = BankAPI.getAccountFullStatement(login.getAccess_token(), "0100907846000", "13940901", "13940909");
 //		ClientResponse response = BankAPI.getCheckInfo(login.getAccess_token(), "0100907846000", "0000396778");
 //		ClientResponse response = BankAPI.getChequeBookInfo(login.getAccess_token(), "0100907846000", "4389781091");
-		ClientResponse response = BankAPI.getTicketTransferLocal(login.getAccess_token(), "0100907846000", "0200217195008","50");
+//		ClientResponse response = BankAPI.getTicketTransferLocal(login.getAccess_token(), "0100907846000", "0200217195008","50");
 //		ClientResponse response = BankAPI.TransferLocal(login.getAccess_token(), "0100907846000", "0200217195008","50", "3280712952681600");
 		
 	    if (response.getStatus() == 401) {	        
 				throw new AuthenticationException("Access Token");			
 	    }
 	    
-	    String result = "@Produces(\"application/json\") for Elnaz with: \n " + jsonObject + "\nAccount Summary is :" + response.getEntity(String.class);
+	    String result = "@Produces(\"application/json\") for Elnaz with: \n " + jsonObject + "\nAccount Summary is :\n\n\n" + response.getEntity(String.class);
 		
 		return Response.status(200)
-				.header("Access-Control-Allow-Origin", "*")
-			    .header("Access-Control-Allow-Methods", "POST, GET, PUT, UPDATE, OPTIONS")
-			    .header("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With")
 			    .entity(result).build();
 	  }
 	  
@@ -105,9 +102,6 @@ public class LoginController {
 	   
 		
 		return Response.status(200)
-				.header("Access-Control-Allow-Origin", "*")
-			    .header("Access-Control-Allow-Methods", "POST, GET, PUT, UPDATE, OPTIONS")
-			    .header("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With")
 			    .entity(in_json).build();
 	  }
 
