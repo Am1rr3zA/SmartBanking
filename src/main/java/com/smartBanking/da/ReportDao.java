@@ -2,11 +2,15 @@ package main.java.com.smartBanking.da;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import main.java.com.smartBanking.bin.BinReport;
+import main.java.com.smartBanking.bin.BinRule;
 
 public class ReportDao {
 	DatabaseAccess data;
@@ -63,9 +67,69 @@ public class ReportDao {
 			prepStmt = null;	
 		}
 	}
+	
+	public List<BinReport> getAllReportForUser(int pid) 
+	{
+		PreparedStatement prepStmt = null;
+		try {
+			String cSQL = "SELECT * FROM report WHERE pid = ? ";
+			prepStmt = connection.prepareStatement(cSQL);
+			prepStmt.setInt(1, pid); 
+			ResultSet result = prepStmt.executeQuery();
+			List<BinReport> reports = new ArrayList<>();
+			
+			while (result.next())
+			{
+				BinReport binReport = new BinReport();
+				binReport.seId(Integer.parseInt(result.getString("id")));
+				binReport.setPid(pid);
+				binReport.setReject(result.getString("reject"));
+				binReport.setReportDate(result.getString("reportdate"));
+				binReport.setRid(Integer.parseInt(result.getString("rid")));
+				binReport.setSatisfy(result.getBoolean("satisfy"));
+				binReport.setTriger(result.getString("trigered"));
+				
+				reports.add(binReport);
+			}
+			return reports;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			prepStmt = null;
+			return null;
+		}
+	}
 
 
-
+	public List<BinReport> getAllReportForRule(int rid) 
+	{
+		PreparedStatement prepStmt = null;
+		try {
+			String cSQL = "SELECT * FROM report WHERE rid = ? ";
+			prepStmt = connection.prepareStatement(cSQL);
+			prepStmt.setInt(1, rid); 
+			ResultSet result = prepStmt.executeQuery();
+			List<BinReport> reports = new ArrayList<>();
+			
+			while (result.next())
+			{
+				BinReport binReport = new BinReport();
+				binReport.seId(Integer.parseInt(result.getString("id")));
+				binReport.setPid(Integer.parseInt(result.getString("pid")));
+				binReport.setReject(result.getString("reject"));
+				binReport.setReportDate(result.getString("reportdate"));
+				binReport.setRid(rid);
+				binReport.setSatisfy(result.getBoolean("satisfy"));
+				binReport.setTriger(result.getString("trigered"));
+				
+				reports.add(binReport);
+			}
+			return reports;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			prepStmt = null;
+			return null;
+		}
+	}
 
 
 

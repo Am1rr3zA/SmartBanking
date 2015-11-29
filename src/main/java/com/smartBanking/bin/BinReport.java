@@ -8,17 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class BinReport {
-	public BinReport(int pid, int rid ,String reportdate, boolean satisfy, String triger, String reject) {
-		super();
-		
-		this.rid = rid;
-		this.pid = pid;
-		this.reportdate = reportdate;
-		this.satisfy = satisfy;
-		this.triger = triger;
-		this.reject = reject;
-		//this.id = id;
-	}
+
 	@XmlElement
 	private int id;
 	@XmlElement
@@ -33,6 +23,23 @@ public class BinReport {
 	private String triger;
 	@XmlAttribute
 	private String reject;
+	
+	public BinReport(int pid, int rid ,String reportdate, boolean satisfy, String triger, String reject) {
+		super();
+		
+		this.rid = rid;
+		this.pid = pid;
+		this.reportdate = reportdate;
+		this.satisfy = satisfy;
+		this.triger = triger;
+		this.reject = reject;
+		//this.id = id;
+	}
+	
+	public BinReport() {
+		super();
+
+	}
 	
 	public int getRid() {
 		return rid;
