@@ -54,7 +54,7 @@ public class RuleController {
 			Parse parser = new Parse(rule,user);
 			//System.out.println("........"+rule.getRID());
 			System.out.println("condition in controler "+rule.getCondition());
-			List<Boolean> result = parser.feasibility(parser.parseCondition());
+			List<Boolean> result = parser.feasibility();
 			boolean flagOneFalse = false, flagOneTrue = false;
 			for(boolean value:result)
 			{

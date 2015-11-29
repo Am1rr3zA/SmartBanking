@@ -9,9 +9,9 @@ public class NewCondition extends Condition {
 		satisfy = false;
 	}
 	
-	public NewCondition(String field, String operand, double value, boolean satisfy)
+	public NewCondition(String field, double value, boolean satisfy)
 	{
-		super(field, operand, value);
+		super(field, value);
 		this.satisfy = satisfy;
 	}
 	
