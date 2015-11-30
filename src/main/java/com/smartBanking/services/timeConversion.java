@@ -104,9 +104,6 @@ return bintime;
 				bintime2=bintime2+"0"+binDate2[i].toString();
 		}
 		
-		System.out.println("first "+bintime);
-		System.out.println("second "+bintime2);
-		
 		output[0] = bintime;
 		output[1] = bintime2;
 return output;

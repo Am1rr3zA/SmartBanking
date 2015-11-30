@@ -41,7 +41,8 @@ public class ListController {
 			String[] parts = rule.getAction().split("\\s+");
 			actiobObject.put("destination", parts[0]);
 			actiobObject.put("value", parts[1]);
-			jsonObject.put("action", actiobObject.toString());
+			jsonObject.put("action", actiobObject);
+			
 			
 			String rul = rule.getCondition();
 			JSONArray rulArray = new JSONArray();
@@ -53,9 +54,9 @@ public class ListController {
 					rulObject.put("cond".trim(), trigCond.getCond().trim());
 					rulArray.put(rulObject);
 				}
-				rul = rulArray.toString();
+//				rul = rulArray.toString();
 			}
-			jsonObject.put("condition", rul);
+			jsonObject.put("condition", rulArray);
 			
 			resp.put(jsonObject);
 		}
@@ -63,9 +64,6 @@ public class ListController {
 	    String result = resp.toString();
 		
 		return Response.status(200)
-				.header("Access-Control-Allow-Origin", "*")
-			    .header("Access-Control-Allow-Methods", "POST, GET, PUT, UPDATE, OPTIONS")
-			    .header("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With")
 			    .entity(result).build();
 	
 	}

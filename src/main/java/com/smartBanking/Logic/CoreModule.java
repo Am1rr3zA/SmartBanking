@@ -30,7 +30,7 @@ import main.java.com.smartBanking.da.LoginDao;
 import main.java.com.smartBanking.services.BankAPI;
 import main.java.com.smartBanking.services.timeConversion;
 
-public class Parse {
+public class CoreModule {
 
 	//String Input_condition;
 	//String Input_action;
@@ -41,7 +41,7 @@ public class Parse {
 
 
 
-	public Parse(BinRule input, BinLogin user) throws notFound
+	public CoreModule(BinRule input, BinLogin user) throws notFound
 	{
 		if(user.getAccess_token()!= null)
 			token = user.getAccess_token();
@@ -73,8 +73,6 @@ public class Parse {
 
 		for(BinCondition bincondition:condition)
 		{
-
-			System.out.println("condition code "+bincondition.getType());
 			if(bincondition.getType().equals("1") || bincondition.getType().equals("2") || bincondition.getType().equals("3"))
 			{
 				ClientResponse response = BankAPI.getBalance(token, accountNum);
@@ -169,14 +167,12 @@ public class Parse {
 
 			if(bincondition.getType().equals("8"))
 			{
-
 				String fromDate = tc.GregorianToJalali(systemDate[0]);
 				fromDate = fromDate.substring(0, 6)+"01";
 				String toDate = tc.GregorianToJalali(systemDate[0]);
 				ClientResponse response = BankAPI.getAccountFullStatement(token, accountNum,fromDate ,toDate);
 				JSONObject jObject  = new JSONObject(response.getEntity(String.class));
 				JSONArray additionalData = jObject.getJSONArray("additionalData"); 
-				System.out.println(additionalData.length());
 				if(Integer.valueOf(bincondition.getCond()) < additionalData.length())
 					feasValues.add(true);
 				else
@@ -190,24 +186,20 @@ public class Parse {
 				ClientResponse response = BankAPI.getAccountFullStatement(token, accountNum,cal.Yesterday(cal) ,tc.GregorianToJalali(systemDate[0]));
 				//ClientResponse response = BankAPI.getAccountFullStatement(token, accountNum,"13940901" ,"13940909");
 				String responseString = response.getEntity(String.class);
-				
-					JSONObject jObject  = new JSONObject(responseString);
-					JSONArray additionalData = jObject.getJSONArray("additionalData");
-					if(additionalData.length()>0)
-					{
-						System.out.println(additionalData);
 
+				JSONObject jObject  = new JSONObject(responseString);
+				JSONArray additionalData = jObject.getJSONArray("additionalData");
+				if(additionalData.length()>0)
+				{
 					if(bincondition.getType().equals("9"))
 					{
-						System.out.println("in 9: ");
-						//System.out.println("description: "+additionalData.getJSONObject(0).getString("description"));
 						boolean flag = false;
 						for(int i=0; i<additionalData.length(); i++)
 						{
-							//System.out.println("additional Data "+ additionalData.getJSONObject(i).get("description"));
+
 							if(additionalData.getJSONObject(i).get("description").equals("447"))
 							{
-								System.out.println(additionalData.getJSONObject(i).get("amount").toString()+"------"+Integer.valueOf(bincondition.getCond()));
+
 								if(Integer.valueOf(additionalData.getJSONObject(i).get("amount").toString()) > Integer.valueOf(bincondition.getCond()))
 									flag = true;
 							}
@@ -279,12 +271,7 @@ public class Parse {
 
 		}
 
-
-
-
-
-		//for(Boolean b:feasValues)
-		//	System.out.println("value: "+ b);
+		
 		return feasValues;
 
 	}

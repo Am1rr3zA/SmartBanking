@@ -55,12 +55,6 @@ public class ReportDao {
 			else if(binReport.isSatisfy() == true)
 				prepStmt.setInt(4, 1);
 			
-			System.out.println(binReport.getPid());
-			System.out.println(binReport.getRid());
-			System.out.println(binReport.getReportdate());
-			System.out.println(cSQL);
-			//prepStmt.setString(5, binReport.getTriger());
-			//prepStmt.setString(6, binReport.getReject());
 			prepStmt.executeUpdate();
 		}catch (SQLException e) {
 			e.printStackTrace();

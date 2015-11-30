@@ -49,9 +49,9 @@ public class ReportController {
 					trigObject.put("cond".trim(), trigCond.getCond().trim());
 					trigArray.put(trigObject);
 				}
-				trig = trigArray.toString();
+//				trig = trigArray.toString();
 			}
-			jsonObject.put("triggered", trig);
+			jsonObject.put("triggered", trigArray);
 			String rej = report.getReject();
 			JSONArray rejArray = new JSONArray();
 			JSONObject rejObject = new JSONObject();
@@ -60,11 +60,11 @@ public class ReportController {
 				for (BinCondition rejCond:rejConds){
 					rejObject.put("type".trim(), rejCond.getType().trim());
 					rejObject.put("cond".trim(), rejCond.getCond().trim());
-					rejArray.put(rejObject);
+//					rejArray.put(rejObject);
 				}
 				rej = rejArray.toString();
 			}
-			jsonObject.put("rejected", rej);
+			jsonObject.put("rejected", rejArray);
 			
 			resp.put(jsonObject);
 		}
@@ -104,9 +104,9 @@ public class ReportController {
 					trigObject.put("cond".trim(), trigCond.getCond().trim());
 					trigArray.put(trigObject);
 				}
-				trig = trigArray.toString();
+//				trig = trigArray.toString();
 			}
-			jsonObject.put("triggered", trig);
+			jsonObject.put("triggered", trigArray);
 			String rej = report.getReject();
 			JSONArray rejArray = new JSONArray();
 			JSONObject rejObject = new JSONObject();
@@ -117,9 +117,9 @@ public class ReportController {
 					rejObject.put("cond".trim(), rejCond.getCond().trim());
 					rejArray.put(rejObject);
 				}
-				rej = rejArray.toString();
+//				rej = rejArray.toString();
 			}
-			jsonObject.put("rejected", rej);
+			jsonObject.put("rejected", rejArray);
 			
 			resp.put(jsonObject);
 		}
