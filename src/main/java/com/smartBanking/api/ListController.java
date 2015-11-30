@@ -14,7 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import main.java.com.smartBanking.Exceptions.notFound;
-import main.java.com.smartBanking.Parser.ConvertToString;
+import main.java.com.smartBanking.Logic.ConvertToString;
 import main.java.com.smartBanking.bin.BinCondition;
 import main.java.com.smartBanking.bin.BinRule;
 import main.java.com.smartBanking.da.RuleDao;

@@ -21,7 +21,7 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
-import main.java.com.smartBanking.Parser.ConvertToString;
+import main.java.com.smartBanking.Logic.ConvertToString;
 import main.java.com.smartBanking.bin.BinCondition;
 import main.java.com.smartBanking.bin.BinLogin;
 import main.java.com.smartBanking.bin.BinRule;

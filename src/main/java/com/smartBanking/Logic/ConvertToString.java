@@ -1,4 +1,4 @@
-package main.java.com.smartBanking.Parser;
+package main.java.com.smartBanking.Logic;
 
 import java.util.ArrayList;
 import java.util.List;

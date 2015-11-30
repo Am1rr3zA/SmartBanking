@@ -66,6 +66,11 @@
 		<groupId>mysql</groupId>
 		<artifactId>mysql-connector-java</artifactId>
 		<version>5.1.37</version>
-	</dependency>	
+	</dependency>
+	<dependency>
+        <groupId>com.bahmanm</groupId>
+        <artifactId>persianutils_2.10</artifactId>
+        <version>1.0</version>
+    </dependency>
   </dependencies>
 </project>
