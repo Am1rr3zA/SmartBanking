@@ -5,9 +5,12 @@ import java.util.List;
 
 import javax.security.sasl.AuthenticationException;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -27,8 +30,8 @@ public class ReportController {
 
 	@GET
 	@Produces("application/json")
-	public Response allReports() throws JSONException, AuthenticationException {
-		List<BinReport> reports = dao.getAllReportForUser(1);
+	public Response allReports(@DefaultValue("1") @QueryParam("pid") String pid) throws JSONException, AuthenticationException {
+		List<BinReport> reports = dao.getAllReportForUser(Integer.parseInt(pid));
 		JSONArray resp = new JSONArray();
 		JSONObject jsonObject = new JSONObject();
 		for (BinReport report:reports){
@@ -72,18 +75,15 @@ public class ReportController {
 	    String result = resp.toString();
 		
 		return Response.status(200)
-				.header("Access-Control-Allow-Origin", "*")
-			    .header("Access-Control-Allow-Methods", "POST, GET, PUT, UPDATE, OPTIONS")
-			    .header("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With")
 			    .entity(result).build();		
 		
 	}
 	
 	@GET
-	@Path("{id}")
+	@Path("{idreport}")
 	@Produces("application/json")
-	public Response specificReport() throws JSONException, AuthenticationException {
-		List<BinReport> reports = dao.getAllReportForRule(1);
+	public Response specificReport(@PathParam("idreport") int idreport) throws JSONException, AuthenticationException {
+		List<BinReport> reports = dao.getAllReportForRule(idreport);
 		JSONArray resp = new JSONArray();
 		JSONObject jsonObject = new JSONObject();
 		for (BinReport report:reports){
@@ -127,9 +127,6 @@ public class ReportController {
 	    String result = resp.toString();
 		
 		return Response.status(200)
-				.header("Access-Control-Allow-Origin", "*")
-			    .header("Access-Control-Allow-Methods", "POST, GET, PUT, UPDATE, OPTIONS")
-			    .header("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With")
 			    .entity(result).build();		
 		
 	}

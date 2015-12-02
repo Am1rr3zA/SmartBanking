@@ -42,7 +42,7 @@ public class RuleDao {
 	{
 		PreparedStatement prepStmt = null;
 		try {
-			String cSQL = "SELECT * FROM rule WHERE pid = ? ";
+			String cSQL = "SELECT * FROM rule WHERE pid = ? ORDER BY rid";
 			prepStmt = connection.prepareStatement(cSQL);
 			prepStmt.setInt(1, pid); 
 			ResultSet result = prepStmt.executeQuery();

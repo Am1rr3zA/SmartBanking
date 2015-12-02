@@ -16,7 +16,7 @@ public class RoundRobin implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent event) {
         scheduler = Executors.newSingleThreadScheduledExecutor();
-        scheduler.scheduleAtFixedRate(new CheckRules(), 0, 1, TimeUnit.MINUTES);
+        scheduler.scheduleAtFixedRate(new CheckRules(), 1, 24, TimeUnit.HOURS);
     }
 
     @Override

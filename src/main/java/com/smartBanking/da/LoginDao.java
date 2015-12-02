@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import main.java.com.smartBanking.Exceptions.UserNotFound;
 import main.java.com.smartBanking.bin.BinLogin;
 
 public class LoginDao {
@@ -37,17 +38,16 @@ public class LoginDao {
 		}
 	}
 	
-	public BinLogin getLoginByUsername(String username) 
+	public BinLogin getLoginByUsername(String username) throws UserNotFound 
 	{
 		PreparedStatement prepStmt = null;
 		try {
 			String cSQL = "SELECT * FROM login WHERE username = ? ";
 			prepStmt = connection.prepareStatement(cSQL);
 			prepStmt.setString(1, username); 
-			System.out.println(cSQL);
 			ResultSet result = prepStmt.executeQuery();
 			BinLogin login = new BinLogin();
-			while (result.next())
+			if (result.next())
 			{
 				login.setLoginId(Integer.parseInt(result.getString("id")));
 				login.setUsername(username);
@@ -61,6 +61,9 @@ public class LoginDao {
 					accounts = Arrays.asList(tmp.split("\\s*,\\s*"));
 				}
 				login.setAccounts(accounts);
+			}
+			else{
+				throw new UserNotFound("User with username = " +username +" does not exist in database");
 			}
 			return login;
 		} catch (SQLException e) {

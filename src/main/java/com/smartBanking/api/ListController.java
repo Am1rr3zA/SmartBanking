@@ -4,9 +4,11 @@ import java.sql.SQLException;
 import java.util.List;
 
 import javax.security.sasl.AuthenticationException;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
 import org.json.JSONArray;
@@ -25,9 +27,9 @@ public class ListController {
 	
 	@GET
 	@Produces("application/json")
-	public Response returnAllRulesForSpecificUser() throws JSONException, AuthenticationException, notFound, SQLException {
-		int pid = 1;
-		List<BinRule> rules = dao.getRulesForUser(pid);
+	public Response returnAllRulesForSpecificUser(@DefaultValue("1") @QueryParam("pid") String pid) throws JSONException, AuthenticationException, notFound, SQLException {
+//		int pid = 1;
+		List<BinRule> rules = dao.getRulesForUser(Integer.parseInt(pid));
 		JSONArray resp = new JSONArray();
 		JSONObject jsonObject = new JSONObject();
 		
@@ -64,7 +66,8 @@ public class ListController {
 	    String result = resp.toString();
 		
 		return Response.status(200)
-			    .entity(result).build();
+			    .entity(result)
+			    .build();
 	
 	}
 

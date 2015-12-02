@@ -15,93 +15,51 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
+import com.sun.jersey.api.client.ClientResponse;
+
+import main.java.com.smartBanking.Exceptions.UserNotFound;
 import main.java.com.smartBanking.Exceptions.notFound;
-import main.java.com.smartBanking.Logic.ConvertToString;
-import main.java.com.smartBanking.Logic.CoreModule;
-import main.java.com.smartBanking.bin.BinCondition;
 import main.java.com.smartBanking.bin.BinLogin;
-import main.java.com.smartBanking.bin.BinReport;
 import main.java.com.smartBanking.bin.BinRule;
 import main.java.com.smartBanking.da.LoginDao;
-import main.java.com.smartBanking.da.ReportDao;
 import main.java.com.smartBanking.da.RuleDao;
+import main.java.com.smartBanking.services.BankAPI;
 
 @Path("/rule")
 public class RuleController {
 
-		RuleDao dao = new RuleDao();
+//		RuleDao ruleDao = new RuleDao();
 		LoginDao loginDao = new LoginDao();
-		ReportDao reportDao = new ReportDao();
 		@GET
 		@Produces("application/json")
-		public Response login() throws JSONException, AuthenticationException, notFound, SQLException, ParseException {
-			int pid = 1;
-			List<BinRule> rules = dao.getRulesForUser(pid);
-			BinLogin user = loginDao.getLoginByID(1);
-			generateReportData(rules, user);
+		public Response bankApiTest() throws JSONException, AuthenticationException, notFound, SQLException, ParseException, UserNotFound {
+			BinLogin login = loginDao.getLoginByUsername("elnaz");
 
-		generateReportData(rules, user);
-
-		return Response.status(200)
-			    .entity(rules.get(0).toString()).build();
-	}
-
-	public void generateReportData(List<BinRule> rules,BinLogin user) throws notFound, SQLException, ParseException
-
-	{
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd,HH:MM:SS");
-		Date date = new Date();
-
-		for(BinRule rule:rules)
-		{
-			CoreModule parser = new CoreModule(rule,user);
-			List<BinCondition> condition = ConvertToString.stringToBinConditions(rule.getCondition());
-			List<Boolean> result = parser.feasibility(condition);
-
-			boolean flagOneFalse = false, flagOneTrue = false;
-			if(result.size()>1){
-				for(boolean value:result)
-				{
-					
-					if(value == true)
-						flagOneTrue = true;
-					if(value == false)
-						flagOneFalse = true;
-				}
-			}
-			else{
-				if(result.get(0) == true)
-				{
-					flagOneTrue = true;
-					flagOneFalse = false;
-				}
-				else
-				{
-					flagOneTrue = false;
-					flagOneFalse = true;
-				}
-			}
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("ClientID", login.getClientID());
+			jsonObject.put("ClientSecret", login.getClientSecret());
+			jsonObject.put("ClientAccounts", login.getAccounts());
+			jsonObject.put("ClientAccessToken", login.getAccess_token());
+	    
 			
-			if(flagOneTrue == true && flagOneFalse == false)
-			{
-				
-				BinReport reportSample = new BinReport(rule.getPID(),rule.getRID(), date.toString() , true, null, null);
-				reportDao.insertData(reportSample);
-			}
-			else if(flagOneTrue == true && flagOneFalse == true)
-			{
-				
-				BinReport reportSample = new BinReport(rule.getPID(), rule.getRID(), date.toString() , false, null, null);
-				reportDao.insertData(reportSample);
-			}
-			else if(flagOneTrue == false && flagOneFalse == true )
-			{
-				
-				System.out.println("no condition is true");	
-			}
-		}
-		//System.out.println("end of generation");	
+//			ClientResponse response = BankAPI.getBalance(login.getAccess_token(), "0100907846000");
+//			ClientResponse response = BankAPI.getAccountFullStatement(login.getAccess_token(), "0100907846000", "13940901", "13940909");
+//			ClientResponse response = BankAPI.getCheckInfo(login.getAccess_token(), "0100907846000", "0000396778");
+//			ClientResponse response = BankAPI.getChequeBookInfo(login.getAccess_token(), "0100907846000", "4389781091");
+			ClientResponse response = BankAPI.getTicketTransferLocal(login.getAccess_token(), "0100907846000", "0200217195008","50");
+//			ClientResponse response = BankAPI.TransferLocal(login.getAccess_token(), "0100907846000", "0200217195008","50", "3280712952681600");
+			
+		    if (response.getStatus() == 401) {	        
+					throw new AuthenticationException("Access Token");			
+		    }
+		    
+		    String result = "@Produces(\"application/json\") for Elnaz with: \n " + jsonObject + "\nAccount Summary is :\n\n\n" + response.getEntity(String.class);
+			
+			return Response.status(200)
+					.entity(result).build();
 	}
+
 
 }

@@ -1,31 +1,67 @@
-# ************************************************************
-# Sequel Pro SQL dump
-# Version 4499
-#
-# http://www.sequelpro.com/
-# https://github.com/sequelpro/sequelpro
-#
-# Host: 127.0.0.1 (MySQL 5.5.42)
-# Database: smartBanking
-# Generation Time: 2015-11-28 04:36:33 +0000
-# ************************************************************
+-- phpMyAdmin SQL Dump
+-- version 4.0.10.10
+-- http://www.phpmyadmin.net
+--
+-- Host: 127.13.80.130:3306
+-- Generation Time: Dec 02, 2015 at 12:55 AM
+-- Server version: 5.5.45
+-- PHP Version: 5.3.3
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+--
+-- Database: `smart`
+--
+CREATE DATABASE IF NOT EXISTS `smart` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `smart`;
 
-# Dump of table login
-# ------------------------------------------------------------
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `account`
+--
+
+DROP TABLE IF EXISTS `account`;
+CREATE TABLE IF NOT EXISTS `account` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `pid` int(11) NOT NULL,
+  `account_number` varchar(16) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `account_type` int(11) DEFAULT NULL,
+  `description` text COLLATE utf8_bin,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=6 ;
+
+--
+-- Truncate table before insert `account`
+--
+
+TRUNCATE TABLE `account`;
+--
+-- Dumping data for table `account`
+--
+
+INSERT INTO `account` (`id`, `pid`, `account_number`, `account_type`, `description`) VALUES
+(1, 1, '0100907846000', NULL, 'Checking'),
+(2, 1, '0200217195008', NULL, 'Saving'),
+(3, 1, '1235123123123123', 0, 'حساب طلایی'),
+(4, 2, '123980123123', 0, 'دسته چک'),
+(5, 2, '1239876987123', 0, 'تست 2');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `login`
+--
 
 DROP TABLE IF EXISTS `login`;
-
-CREATE TABLE `login` (
+CREATE TABLE IF NOT EXISTS `login` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(20) COLLATE utf8_bin NOT NULL,
   `password` varchar(20) COLLATE utf8_bin NOT NULL,
@@ -34,82 +70,163 @@ CREATE TABLE `login` (
   `access_token` varchar(36) COLLATE utf8_bin NOT NULL,
   `accounts` text COLLATE utf8_bin,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=3 ;
 
-LOCK TABLES `login` WRITE;
-/*!40000 ALTER TABLE `login` DISABLE KEYS */;
+--
+-- Truncate table before insert `login`
+--
 
-INSERT INTO `login` (`id`, `username`, `password`, `client_id`, `client_secret`, `access_token`, `accounts`)
-VALUES
-	(1,X'456C6E617A',X'656C69',X'3164396463643968313468',X'6E6233313474',X'66626262633834392D653639392D346566332D613933352D613632353839353933353534',X'303130303930373834363030302C30323030323137313935303038');
+TRUNCATE TABLE `login`;
+--
+-- Dumping data for table `login`
+--
 
-/*!40000 ALTER TABLE `login` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `login` (`id`, `username`, `password`, `client_id`, `client_secret`, `access_token`, `accounts`) VALUES
+(1, 'elnaz', 'eli', '1d9dcd9h14h', 'nb314t', 'd2709f67-ce5b-412e-bba7-202ed979ab18', '0100907846000,0200217195008'),
+(2, 'Milad', 'mili', '1d9dcd9h15h', '123qwe', 'd2709f67-ce5b-412e-bba7-202ed979ab18', '0100907846000,0200217195008');
 
+-- --------------------------------------------------------
 
-# Dump of table report
-# ------------------------------------------------------------
+--
+-- Table structure for table `report`
+--
 
 DROP TABLE IF EXISTS `report`;
-
-CREATE TABLE `report` (
+CREATE TABLE IF NOT EXISTS `report` (
   `pid` int(11) DEFAULT NULL,
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `rid` int(11) NOT NULL,
-  `reportdate` text COLLATE utf8_bin,
+  `reportdate` date DEFAULT NULL,
   `satisfy` int(1) DEFAULT NULL,
   `trigered` text COLLATE utf8_bin,
   `reject` text COLLATE utf8_bin,
   PRIMARY KEY (`id`),
   KEY `ridFK` (`rid`),
-  KEY `pidForK` (`pid`),
-  CONSTRAINT `pidForK` FOREIGN KEY (`pid`) REFERENCES `login` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `ridFK` FOREIGN KEY (`rid`) REFERENCES `rule` (`rid`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  KEY `pidForK` (`pid`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=15 ;
 
-LOCK TABLES `report` WRITE;
-/*!40000 ALTER TABLE `report` DISABLE KEYS */;
+--
+-- Truncate table before insert `report`
+--
 
-INSERT INTO `report` (`pid`, `id`, `rid`, `reportdate`, `satisfy`, `trigered`, `reject`)
-VALUES
-	(1,13,1,X'467269204E6F762032372032323A34343A3233204553542032303135',0,NULL,NULL);
+TRUNCATE TABLE `report`;
+--
+-- Dumping data for table `report`
+--
 
-/*!40000 ALTER TABLE `report` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `report` (`pid`, `id`, `rid`, `reportdate`, `satisfy`, `trigered`, `reject`) VALUES
+(1, 13, 1, '2015-03-12', 0, NULL, NULL),
+(1, 14, 1, '2015-03-12', 1, '2 1000*#4 YYYYMMDD*#', '4 YYYYMMDD-YYYYMMDD*#5 5*#');
 
+-- --------------------------------------------------------
 
-# Dump of table rule
-# ------------------------------------------------------------
+--
+-- Table structure for table `rule`
+--
 
 DROP TABLE IF EXISTS `rule`;
-
-CREATE TABLE `rule` (
+CREATE TABLE IF NOT EXISTS `rule` (
   `rid` int(11) NOT NULL AUTO_INCREMENT,
   `pid` int(11) NOT NULL,
   `condition` text COLLATE utf8_bin NOT NULL,
   `action` text COLLATE utf8_bin NOT NULL,
   `ruleName` varchar(32) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`rid`),
-  KEY `login_fk` (`pid`),
-  CONSTRAINT `pidFK` FOREIGN KEY (`pid`) REFERENCES `login` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  KEY `login_fk` (`pid`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=34 ;
 
-LOCK TABLES `rule` WRITE;
-/*!40000 ALTER TABLE `rule` DISABLE KEYS */;
+--
+-- Truncate table before insert `rule`
+--
 
-INSERT INTO `rule` (`rid`, `pid`, `condition`, `action`, `ruleName`)
-VALUES
-	(1,1,X'3120313030302A23646174652032303134313132302A23',X'61636F756E74203131313131',X'446F6E6174696F6E'),
-	(2,1,X'3220313030302A233420595959594D4D44442A233420595959594D4D44442D595959594D4D44442A233520352A23',X'6163636F756E74206F722063617274206E756D62657220313233323133',NULL);
+TRUNCATE TABLE `rule`;
+--
+-- Dumping data for table `rule`
+--
 
-/*!40000 ALTER TABLE `rule` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `rule` (`rid`, `pid`, `condition`, `action`, `ruleName`) VALUES
+(1, 1, '1 1000*#date 20141120*#', 'acount 11111', 'موسسه محک'),
+(2, 1, '1 100*#4 13940908-13940910*#', '0200217195008 20', 'خانه سالمندان'),
+(3, 1, '11 15*#4 13940901-13940909*#', '0200217195008 50', 'کانون انسان شناسی و فرهنگ '),
+(7, 1, '1 1000*#4 13941001*#', '0200217195008 100', 'کانون هواداران پرسپولیس'),
+(8, 1, '9 100*#5 10*#', '0200217195008 50', 'موسسه خوارزمی'),
+(9, 1, '8 6*#', '12039789123 1000000', ''),
+(10, 1, '8 6*#', '12039789123 1000000', ''),
+(11, 1, '8 6*#', '12039789123 1000000', ''),
+(12, 1, '8 6*#', '12039789123 1000000', ''),
+(13, 1, '8 6*#', '12039789123 1000000', ''),
+(14, 1, '8 6*#', '12039789123 1000000', ''),
+(15, 1, '8 6*#', '12039789123 1000000', ''),
+(16, 1, '1 1000000*#4 13940506*#', '1236781823 10000000', '??? ???'),
+(17, 1, '9 200000*#', '2309187213123 100000', ''),
+(18, 1, '1 1000000*#5 7*#', '989872198 100000000', 'تست میلاد'),
+(19, 1, '2 10000*#1 100000*#', '123123321 1000000000', 'قسط تست'),
+(20, 1, '2 1000000*#', '989872198 567', ''),
+(21, 1, '1 100000*#8 6*#5 54*#', '45345345345 1000000', 'واریزی پیچیده'),
+(22, 1, '9 100000*#', '989872198 100000', 'واریز ماهانه'),
+(23, 1, '1 100000*#', '1123123 10000000', ''),
+(24, 1, '1 100000*#5 2000000*#', '989872198 10000000', ''),
+(25, 2, '9 1000000*#4 13940106*#', '10000123123 1200', ''),
+(28, 2, '9 1231*#', '11231 322', 'Milad K'),
+(29, 1, '1 1000*#4 13940908-13940910*#', '989872198 100', ''),
+(30, 1, '8 5*#', '0200217195008 100', ''),
+(31, 1, '8 5*#', '0200217195008 100', ''),
+(32, 1, '8 5*#', '0200217195008 20000', ''),
+(33, 1, '1 100000*#4 13941001*#', '123123321 1000', '');
 
+-- --------------------------------------------------------
 
+--
+-- Table structure for table `suggestion`
+--
 
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+DROP TABLE IF EXISTS `suggestion`;
+CREATE TABLE IF NOT EXISTS `suggestion` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `pid` int(11) NOT NULL,
+  `account_number` varchar(16) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `suggestion_name` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `suggestion_login_fk` (`pid`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=7 ;
+
+--
+-- Truncate table before insert `suggestion`
+--
+
+TRUNCATE TABLE `suggestion`;
+--
+-- Dumping data for table `suggestion`
+--
+
+INSERT INTO `suggestion` (`id`, `pid`, `account_number`, `suggestion_name`) VALUES
+(1, 1, '989872198', 'بنیاد دانش محوران جوان'),
+(5, 1, '123123321', 'بنیاد ایتام امام حسین'),
+(6, 2, '123123321', 'بنیاد ایتام امام حسین');
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `report`
+--
+ALTER TABLE `report`
+  ADD CONSTRAINT `pidForK` FOREIGN KEY (`pid`) REFERENCES `login` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `ridFK` FOREIGN KEY (`rid`) REFERENCES `rule` (`rid`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `rule`
+--
+ALTER TABLE `rule`
+  ADD CONSTRAINT `pidFK` FOREIGN KEY (`pid`) REFERENCES `login` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `suggestion`
+--
+ALTER TABLE `suggestion`
+  ADD CONSTRAINT `suggestion_login_fk` FOREIGN KEY (`pid`) REFERENCES `login` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
