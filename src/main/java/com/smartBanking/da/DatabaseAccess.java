@@ -21,8 +21,6 @@ public class DatabaseAccess {
 		//String UserName = "root";
 		//String Password = "";
 		
-//		String UserName = "am1rr3za";
-//		String Password = "Amirreza123";
 		try
 		{
 			Class.forName(DRIVER);
